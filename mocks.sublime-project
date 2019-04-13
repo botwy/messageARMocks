@@ -1,0 +1,12 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns": ["node_modules", "public"],
+			"file_exclude_patterns": ["*.map"]
+		},
+	],
+	"tab_size": 4,
+	"translate_tabs_to_spaces": false
+}

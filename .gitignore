@@ -1,0 +1,7 @@
+node_modules/
+.idea/
+public/
+/npm-debug.log
+npm-debug.log
+mocks.sublime-workspace
+.DS_Store
