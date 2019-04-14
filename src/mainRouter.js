@@ -4,8 +4,10 @@ import { chatData } from './chatData';
 import { messageIdGenerator } from './messageIdGenerator';
 
 const CHAT_URL = '/chat'
+const AUTH_URL = '/auth'
 const mainRouter = express.Router();
 const chat = express.Router();
+const auth = express.Router();
 
 const chatList = cloneDeep(chatData);
 
@@ -33,6 +35,23 @@ chat.post('/message', (req, res) => {
     body: chatList,
   });
 })
+
+auth.post('/', (req, res) => {
+  const { userName } = req.body
+
+  if (userName === 'denis') {
+    res.status(200).send({
+      success: true,
+    })
+    return
+  }
+
+  res.status(200).send({
+    success: false,
+  })
+})
+
 mainRouter.use(CHAT_URL, chat)
+mainRouter.use(AUTH_URL, auth)
 
 export default mainRouter
