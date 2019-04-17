@@ -12,10 +12,12 @@ const auth = express.Router();
 const chatList = cloneDeep(chatData);
 
 chat.get("/", (req, res) => {
-  res.status(200).send({
-    success: true,
-    body: chatList,
-  });
+  setTimeout(() => {
+    res.status(200).send({
+      success: true,
+      body: chatList,
+    });
+  }, 10000)
 })
 
 chat.post('/message', (req, res) => {
@@ -30,10 +32,11 @@ chat.post('/message', (req, res) => {
   const chat = chatList.find(chat => chat.id === chatId)
   const messageId = messageIdGenerator()
   chat.messages.push({ id: String(messageId), text, author, createDate })
-  res.status(200).send({
-    success: true,
-    body: chatList,
-  });
+  
+    res.status(200).send({
+      success: true,
+      body: chatList,
+    });
 })
 
 auth.post('/', (req, res) => {
