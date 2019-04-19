@@ -12,6 +12,8 @@ const auth = express.Router();
 const chatList = cloneDeep(chatData);
 
 chat.get("/", (req, res) => {
+  console.log(req.cookies)
+
   setTimeout(() => {
     res.status(200).send({
       success: true,
@@ -21,6 +23,16 @@ chat.get("/", (req, res) => {
 })
 
 chat.post('/message', (req, res) => {
+  console.log(req.cookies)
+  
+  const { cookies: { session } = {} } = req
+  if (session !== "chat-message-ar") {
+    res.status(200).send({
+      success: false,
+    })
+    return
+  }
+
   const { chatId, message: { text, createDate, author: reqAuthor = {} } = {} } = req.body
   let author;
   if (reqAuthor.id) {
@@ -39,10 +51,12 @@ chat.post('/message', (req, res) => {
     });
 })
 
-auth.post('/', (req, res) => {
-  const { userName } = req.body
-
-  if (userName === 'denis') {
+auth.get('/', (req, res) => {
+  console.log(req.headers)
+  console.log(req.cookies)
+  const { headers: { authorization } = {} } = req
+  if (authorization === "Basic dGVzdDp0ZXN0") {
+    res.cookie("session", "chat-message-ar")
     res.status(200).send({
       success: true,
     })
