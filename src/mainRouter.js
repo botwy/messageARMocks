@@ -12,6 +12,7 @@ const auth = express.Router();
 const chatList = cloneDeep(chatData);
 
 chat.get("/", (req, res) => {
+  console.log(req.headers)
   console.log(req.cookies)
 
   setTimeout(() => {
@@ -23,6 +24,7 @@ chat.get("/", (req, res) => {
 })
 
 chat.post('/message', (req, res) => {
+  console.log(req.headers)
   console.log(req.cookies)
   
   const { cookies: { session } = {} } = req
@@ -44,11 +46,13 @@ chat.post('/message', (req, res) => {
   const chat = chatList.find(chat => chat.id === chatId)
   const messageId = messageIdGenerator()
   chat.messages.push({ id: String(messageId), text, author, createDate })
-  
-    res.status(200).send({
-      success: true,
-      body: chatList,
-    });
+
+    setTimeout(() => {
+        res.status(200).send({
+            success: true,
+            body: chatList,
+        });
+    }, 3000)
 })
 
 auth.get('/', (req, res) => {
